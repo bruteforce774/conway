@@ -49,3 +49,21 @@ function nextGeneration(grid) {
   }
   return newGrid;
 }
+
+function createGridHTML(width, height) {
+  const gridContainer = document.getElementById('grid');
+  gridContainer.innerHTML = ''; // Clear existing
+  
+  // Set up CSS Grid columns
+  gridContainer.style.gridTemplateColumns = `repeat(${width}, 20px)`;
+  
+  for (let row = 0; row < height; row++) {
+    for (let col = 0; col < width; col++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell dead'; // Start as dead
+      cell.dataset.row = row;
+      cell.dataset.col = col;
+      gridContainer.appendChild(cell);
+    }
+  }
+}
