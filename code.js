@@ -89,3 +89,17 @@ function updateGridDisplay(grid) {
     }
   }
 }
+
+function createRandomGrid(width, height) {
+  const grid = [];
+  
+  for (let row = 0; row < height; row++) {
+    grid[row] = [];
+    for (let col = 0; col < width; col++) {
+      const randomNum = Math.floor(Math.random() * 100) + 1; // 1-100
+      grid[row][col] = (randomNum <= 30) ? 1 : 0;
+    }
+  }
+  
+  return grid;
+}
