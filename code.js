@@ -96,10 +96,46 @@ function createRandomGrid(width, height) {
   for (let row = 0; row < height; row++) {
     grid[row] = [];
     for (let col = 0; col < width; col++) {
-      const randomNum = Math.floor(Math.random() * 100) + 1; // 1-100
-      grid[row][col] = (randomNum <= 30) ? 1 : 0;
+      grid[row][col] = (Math.random() < 0.3) ? 1 : 0;
     }
   }
   
   return grid;
+}
+
+function createEmptyGrid(width, height) {
+  const grid = [];
+  
+  for (let row = 0; row < height; row++) {
+    grid[row] = [];
+    for (let col = 0; col < width; col++) {
+      grid[row][col] = 0; // All dead
+    }
+  }
+  
+  return grid;
+}
+
+function setupCellClickHandlers(width) {
+  const allCells = document.querySelectorAll('.cell');
+  
+  allCells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      // Convert 1D index to 2D coordinates
+      const row = Math.floor(index / width);
+      const col = index % width;
+      
+      // Toggle the cell state in currentGrid (from outer scope)
+      currentGrid[row][col] = 1 - currentGrid[row][col];
+      
+      // Toggle the visual display
+      if (currentGrid[row][col] === 1) {
+        cell.classList.remove('dead');
+        cell.classList.add('alive');
+      } else {
+        cell.classList.remove('alive');
+        cell.classList.add('dead');
+      }
+    });
+  });
 }

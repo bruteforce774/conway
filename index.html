@@ -27,6 +27,11 @@
     .cell {
       width: 20px;
       height: 20px;
+      cursor: pointer;
+    }
+
+    .cell:hover {
+      opacity: 0.7;
     }
 
     .cell.alive {
@@ -60,14 +65,26 @@
       background-color: #cccccc;
       cursor: not-allowed;
     }
+
+    .info {
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #e7f3fe;
+      border-left: 4px solid #2196F3;
+    }
   </style>
 </head>
 <body>
   <h1>Conway's Game of Life</h1>
   
+  <div class="info">
+    <strong>Instructions:</strong> Click cells to toggle them alive/dead. Then use the buttons to step through or run the simulation.
+  </div>
+
   <div class="controls">
     <button id="stepBtn">Step Forward</button>
-    <button id="resetBtn">Reset (New Random)</button>
+    <button id="randomBtn">Random Fill</button>
+    <button id="clearBtn">Clear Grid</button>
   </div>
 
   <div id="grid"></div>
@@ -77,20 +94,26 @@
     // Initialize the game
     const width = 30;
     const height = 30;
-    let currentGrid = createRandomGrid(width, height);
+    let currentGrid = createEmptyGrid(width, height);
     
     // Create and display the grid
     createGridHTML(width, height);
     updateGridDisplay(currentGrid);
+    setupCellClickHandlers(width);
 
-    // Add button functionality
+    // Button functionality
     document.getElementById('stepBtn').addEventListener('click', () => {
       currentGrid = nextGeneration(currentGrid);
       updateGridDisplay(currentGrid);
     });
 
-    document.getElementById('resetBtn').addEventListener('click', () => {
+    document.getElementById('randomBtn').addEventListener('click', () => {
       currentGrid = createRandomGrid(width, height);
+      updateGridDisplay(currentGrid);
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      currentGrid = createEmptyGrid(width, height);
       updateGridDisplay(currentGrid);
     });
   </script>
