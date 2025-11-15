@@ -71,13 +71,21 @@ function createGridHTML(width, height) {
 function updateGridDisplay(grid) {
   const height = grid.length;
   const width = grid[0].length;
+  const allCells = document.querySelectorAll('.cell');
   
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
-      const cellState = grid[row][col];
+      const index = row * width + col;
+      const cell = allCells[index];
+      const isAlive = grid[row][col] === 1;
       
-      // How do we find the DOM element for this row/col?
-      // How do we update its class?
+      if (isAlive) {
+        cell.classList.remove('dead');
+        cell.classList.add('alive');
+      } else {
+        cell.classList.remove('alive');
+        cell.classList.add('dead');
+      }
     }
   }
 }
