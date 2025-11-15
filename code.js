@@ -67,3 +67,17 @@ function createGridHTML(width, height) {
     }
   }
 }
+
+function updateGridDisplay(grid) {
+  const height = grid.length;
+  const width = grid[0].length;
+  
+  for (let row = 0; row < height; row++) {
+    for (let col = 0; col < width; col++) {
+      const cellState = grid[row][col];
+      
+      // How do we find the DOM element for this row/col?
+      // How do we update its class?
+    }
+  }
+}
