@@ -9,38 +9,58 @@ function createEmptyGrid(width: number, height: number): GridType {
 }
 
 function App() {
-    const [grid, setGrid] = useState<GridType>(createEmptyGrid(30, 30));
+  const [grid, setGrid] = useState<GridType>(createEmptyGrid(30, 30));
 
-    function handleCellClick(row: number, col: number) {
-        const newGrid = grid.map((r) => r.slice());
-        newGrid[row][col] = newGrid[row][col] === 1 ? 0 : 1;
-        setGrid(newGrid);
+  function handleCellClick(row: number, col: number) {
+    const newGrid = grid.map((r) => r.slice());
+    newGrid[row][col] = newGrid[row][col] === 1 ? 0 : 1;
+    setGrid(newGrid);
+  }
+
+  function handleStepForward() {
+    setGrid(nextGeneration(grid));
+  }
+
+  function handleClear() {
+    setGrid(createEmptyGrid(30, 30));
+  }
+
+  function handleRandomFill() {
+    setGrid(createRandomGrid(30, 30));
+  }
+
+
+  function createRandomGrid(width: number, height: number): GridType {
+    const grid: GridType = [];
+
+    for (let row = 0; row < height; row++) {
+      grid[row] = [];
+      for (let col = 0; col < width; col++) {
+        grid[row][col] = Math.random() < 0.3 ? 1 : 0;
+      }
     }
 
-    function handleStepForward() {
-        setGrid(nextGeneration(grid));
-    }
+    return grid;
+  }
 
-    function handleClear() {
-        setGrid(createEmptyGrid(30, 30));
-    }
+  return (
+    <div>
+      <h1>Conway's Game of Life</h1>
 
-    return (
-        <div>
-            <h1>Conway's Game of Life</h1>
+      <div className="info">
+        <strong>Instructions:</strong> Click cells to toggle them alive/dead.
+        Then use the buttons to step through or run the simulation.
+      </div>
 
-            <div className="info">
-                <strong>Instructions:</strong> Click cells to toggle them alive/dead. Then use the buttons to step through or run the simulation.
-            </div>
+      <div className="controls">
+        <button onClick={handleStepForward}>Step Forward</button>
+        <button onClick={handleRandomFill}>Random Fill</button>
+        <button onClick={handleClear}>Clear Grid</button>
+      </div>
 
-            <div className="controls">
-                <button onClick={handleStepForward}>Step Forward</button>
-                <button onClick={handleClear}>Clear Grid</button>
-            </div>
-
-            <Grid grid={grid} onCellClick={handleCellClick} />
-        </div>
-    );
+      <Grid grid={grid} onCellClick={handleCellClick} />
+    </div>
+  );
 }
 
 export default App;
