@@ -10,7 +10,15 @@
         className="grid"
         style={{ gridTemplateColumns: `repeat(${width}, 20px)` }}
       >
-        {/* nested map here */}
+        {grid.map((row, rowIndex) =>
+          row.map((cellValue, colIndex) => (
+            <Cell
+              key={`${rowIndex}-${colIndex}`}
+              isAlive={cellValue === 1}
+              onClick={() => onCellClick(rowIndex, colIndex)}
+            />
+          ))
+        )}
       </div>
     )
   }
